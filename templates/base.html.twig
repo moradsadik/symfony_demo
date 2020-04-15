@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+
+    <nav class="navbar navbar-light mb-3" style="background-color: #e3f2fd;">
+      <a class="navbar-brand" href="{{path('app_index')}}">Application</a>
+      <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link active" href="{{path('app_login')}}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="{{path('app_logout')}}">Logout</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{path('app_register')}}">Register</a>
+          </li>
+
+          {% if (is_granted('IS_AUTHENTICATED_FULLY')) %}
+          <li class="nav-item">
+           <img src="https://randomuser.me/api/portraits/med/men/{{app.user.id}}.jpg" style="border-radius: 100%; width: 40px; border: 1px solid #b4c1ca; ">
+          </li>
+          {% endif %}
+
+
+      </ul>
+    </nav>
+    
+    <div class="container">
+    {% block body %}{% endblock %}
+    </div>
+
+    </body>
+</html>

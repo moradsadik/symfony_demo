@@ -1,0 +1,12 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+      
+        avatar_artists:
+           uri_prefix: '%app.path.avatar_artists%'
+           upload_destination: '%kernel.project_dir%/public%app.path.avatar_artists%'
+
+        images_partner:
+           uri_prefix: '%app.path.images_partner%'
+           upload_destination: '%kernel.project_dir%/public%app.path.images_partner%'

@@ -1,0 +1,142 @@
+easy_admin:
+
+   site_name: 'Wis Event'
+
+   user:
+      display_name: true
+
+   formats:
+        date:     'd/m/Y'
+        time:     'H:i'
+        datetime: 'd/m/Y H:i:s'
+
+   design:
+        assets:
+          css: 
+            - 'css/custum_easyadmin.css'
+            #- 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/leaflet.css'
+            #- 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css'
+            #- 'https://www.cssscript.com/demo/csscss3-custom-checkboxes-radios-switches-el-checkbox/dist/checkbox.css'
+          js:
+            #- 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/leaflet-src.js'
+        form_theme:
+            - '@EasyAdmin/form/bootstrap_4.html.twig'
+            - '@VichUploader/Form/fields.html.twig'
+            - '@FOSCKEditor/Form/ckeditor_widget.html.twig' 
+            - 'admin/form.html.twig'
+        menu:
+            - {type: 'section', label: 'Admin Entity'} 
+            - {entity: User, label: 'Utilisateur', icon: 'users-cog' }
+            - label: 'Article'
+              icon: 'newspaper'
+              children: 
+                    - {entity: Post, label: 'Articles list', icon: 'th-list'}
+                    - {entity: Post, label: 'Add new Article', params: {action: 'new'}, icon: 'plus'}
+            - {type: 'section', label: 'API Entity'} 
+            - {entity: Event,  label: 'Evenement', icon: 'calendar-alt'}
+            - Category
+            - {entity: Artist, label: 'Artist', icon: 'user-tie'}
+            - {entity: Rencontre, label: 'Rencontre', icon: 'walking'}
+            - {entity: Place, label: 'Lieux', icon: 'map-marker-alt'}
+            - {entity: Social, label: 'Reseaux Sociaux', icon: 'share-alt'}
+            - {entity: Partner, label: 'Partenaires', icon: 'user-tie'}
+            - {entity: FAQ, label: 'FAQ', icon: 'question'}
+   entities:
+
+       Post: 
+          class: App\Entity\Post
+          form:
+              fields: [ 'title',{property : 'content', type: 'fos_ckeditor'},'published',author]
+
+       User:
+          class: App\Entity\User
+          controller: App\Controller\UserAdminController
+          list:
+              fields : ['username', 'email', 'roles', 'posts']
+          form:
+              fields : ['username', 'email', 'password',{property: 'confirmPassword', type: 'text'}, 'roles']
+          edit:
+              fields : ['username', 'email', 'password',{property: '-confirmPassword', type_options: { required: false }}, 'roles']
+       
+       Event:
+          class: App\Entity\Event
+          controller: App\Controller\EventAdminController
+          form:
+              fields: 
+                  - { type: 'group', columns: 8, label: 'Evenement info' }
+                  - 'titre'
+                  - {property : 'description', type: 'fos_ckeditor'}
+                  - 'dateDebut'
+                  - 'dateFin'
+                  - { type: 'group', columns: 4, label: 'Category & Artist' }
+                  - 'category'
+                  - 'artist'
+                  - { type: 'group', columns: 8, label: 'Map' }
+                  - {property: 'location', type_options: { block_name: 'custom_location' }}
+
+       Category:
+          class: App\Entity\Category
+          form: 
+            fields: ['name','slug']
+          list:
+            fields: ['id', 'name','slug']
+          show:
+            fields: ['id','name','slug']
+
+       Artist:
+          class: App\Entity\Artist
+          list:
+              fields: ['id', 'name','prenom',{ property: 'avatar', type: 'image', base_path: '%app.path.avatar_artists%' }]
+          show:
+              fields: ['id', 'name','prenom',{ property: 'avatar', type: 'image', base_path: '%app.path.avatar_artists%' }]
+          form:
+              fields: 
+                    - { type: 'group', columns: 8, label: 'Basic information' }
+                    - 'name'
+                    - 'prenom'
+                    - { type: 'group', columns: 4, label: 'Avatar' }
+                    - { property: 'imageFile', type: 'vich_image' }
+
+       FAQ:
+          class: App\Entity\FAQ
+          form: 
+              fields: 
+                  - {property: 'category',type: 'choice', type_options: { choices: {'-- Artist':'Artist', 'Paiement':'Paiement', 'Rencontre':'Rencontre'} } }
+                  - question
+                  - {property: 'answer', label: 'Réponse', type: 'fos_ckeditor'}
+                  - {property: 'status',type: 'choice', type_options: { choices: {'Publier':'Publier', 'En cours':'En cours'} } }
+                  - {property: 'datePublish', label: 'Date de publication'}
+       Place:
+          class: App\Entity\Place
+          form: 
+              fields: 
+                  - 'name'
+                  - {property: 'description', type: 'fos_ckeditor'}
+                  - {property: 'type', label: 'Type Lieux ', type: 'choice', type_options: { choices: {'Boutique':'Boutique', 'Toilette':'Toilette', 'Parking':'Parking', 'Buvette':'Buvette', 'Restaurant':'Restaurant', 'Cafe':'Cafe'} }}
+                  - {property: 'latLng', type_options: { block_name: 'custom_latLng' }}
+                  - 'datetimeOpen' 
+                  - 'datetimeClose'
+                  - 'active'
+       Social:
+          class: App\Entity\Social
+          form: 
+              fields: 
+                  - {property: 'name', label: 'Nom ', type: 'choice', type_options: { choices: {'facebook':'facebook', 'twitter':'Twitter', 'youtube':'Youtube', 'instagram':'Instagram'} }}
+                  - {property: 'link', label: 'Lien de la page '}
+                  
+       Partner:
+          class: App\Entity\Partner
+          form: 
+              fields: 
+                  - 'name'
+                  - {property: 'description', type: 'fos_ckeditor'}
+                  - service
+                  - { property: 'imageFile', label: 'Logo ', type: 'vich_image' }
+          list:
+              fields: ['id', 'name','service',{ property: 'logo', type: 'image', base_path: '%app.path.images_partner%' }]
+          show:
+              fields: ['id', 'name','service',{ property: 'logo', type: 'image', base_path: '%app.path.images_partner%' }]
+              
+       Rencontre:
+          class: App\Entity\Rencontre
+          

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} AppController!{% endblock %}
+
+{% block body %}
+	
+	{{form_start(form, {'attr' : {'novalidate':'novalidate'}})}}
+		
+		{{form_row(form.username)}}
+		{{form_row(form.email)}}
+		{{form_row(form.password)}}
+		{{form_row(form.confirmPassword, {'label': 'Confirmer votre password'})}}
+	  	<button type="submit" class="btn btn-primary">Submit</button>
+
+	{{form_end(form)}}
+
+{% endblock %}

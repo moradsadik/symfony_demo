@@ -1,0 +1,40 @@
+{# templates/admin/form.html.twig #}
+{% macro createMap(idElement, form) %}
+
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/leaflet.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/leaflet-src.js" ></script>
+	<style> #map { height: 350px; } </style>
+	
+	{{ form_widget(form,  {'attr': {'class': 'mb-1'}}) }}
+	<div id="map"></div>
+
+	<script>
+		
+		latLang = [48.76343113791796,2.3468732712540112];
+		old = document.getElementById("{{idElement}}").value.trim();
+		if(old.length){latLang = old.split(','); }
+		else {  document.getElementById("{{idElement}}").value = latLang; }
+
+		var mymap = L.map('map').setView(latLang, 5);
+		L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(mymap);
+		var marker = L.marker(latLang).addTo(mymap);
+		function onMapClick(e) {
+			marker.setLatLng(e.latlng)
+			document.getElementById("{{idElement}}").value = e.latlng.lat+','+e.latlng.lng
+		}
+		mymap.on('click', onMapClick);
+
+	</script>
+
+{% endmacro %}
+
+
+{% block _event_custom_location_widget %}
+	{{_self.createMap('event_location', form)}}
+{% endblock %} 
+
+{% block _place_custom_latLng_widget %}
+	{{_self.createMap('place_latLng', form)}}
+{% endblock %} 
+
