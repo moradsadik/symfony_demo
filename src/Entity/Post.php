@@ -13,13 +13,16 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     itemOperations = {
  *         "get",
  *         "delete" = {
- *             "access_control" = "is_granted('ROLE_ADMIN') or object.getAuthor() == user"
+ *             "access_control" = "is_granted('IS_AUTHENTICATED_FULLY') or object.getAuthor() == user"
+ *         },
+ *         "put" = {
+ *             "access_control" = "is_granted('IS_AUTHENTICATED_FULLY') or object.getAuthor() == user"
  *         }
  *     },
  *     collectionOperations = {
  *         "get",
  *         "post" = {
- *             "access_control" = "is_granted('IS_ADMIN')"
+ *             "access_control" = "is_granted('IS_AUTHENTICATED_FULLY')"
  *         }
  *     }
  *     

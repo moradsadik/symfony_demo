@@ -10,6 +10,9 @@ use ApiPlatform\Core\Annotation\ApiSubresource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
+
+use App\Controller\UpdatePasswordAction;
 
 
 /**
@@ -26,6 +29,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  *             "denormalization_context" = {
  *                 "groups" = {"put"}
  *             }
+ *         },
+ *         "put-password" = {
+ *            "access_control" = "is_granted('IS_AUTHENTICATED_FULLY') and object == user",
+ *            "method" = "PUT",
+ *            "path" = "users/{id}/update-password",
+ *            "controller" = UpdatePasswordAction::class,
+ *            "denormalization_context" = {
+ *                 "groups" = {"put-password"}
+ *            }
  *         }
  *     },
  *     collectionOperations = {
@@ -63,30 +75,56 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=100)
      * @Groups({"get","put","post"})
-     * @Assert\NotBlank
+     * @Assert\NotBlank(groups = {"post"})
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=100)
      * @Groups({"get","post","put"})
-     * @Assert\NotBlank
-     * @Assert\Email
+     * @Assert\NotBlank(groups = {"post"})
+     * @Assert\Email(groups = {"post"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"post", "put"})
-     * @Assert\NotBlank
+     * @Assert\NotBlank(groups = {"post"})
      */
     private $password;
 
-
     /**
-     * @Assert\EqualTo(propertyPath="password", message="votre password de confirmation n'est pas valid")
+     * @Assert\EqualTo(propertyPath="password",
+     *                 groups = {"post"}, 
+     *                 message="votre password de confirmation n'est pas valid")
+     * @Groups({"post"})
      */
     private $confirmPassword;
+
+
+
+
+    /**
+     * @Assert\NotBlank
+     * @Groups({"put-password"})
+     */
+    private $newPassword;
+
+
+    /**
+     * @Assert\NotBlank
+     * @Assert\EqualTo(propertyPath="newPassword", message="votre password de confirmation n'est pas valid")
+     * @Groups({"put-password"})
+     */
+    private $confirmNewPassword;
+
+    /**     
+     * @SecurityAssert\UserPassword
+     * @Assert\NotBlank
+     * @Groups({"put-password"})
+     */
+    private $oldPassword;
 
    
     /**
@@ -164,6 +202,43 @@ class User implements UserInterface
     public function setConfirmPassword(string $password): self
     {
         $this->confirmPassword = $password;
+
+        return $this;
+    }
+
+
+    public function getNewPassword(): ?string
+    {
+        return $this->newPassword;
+    }
+
+    public function setNewPassword(string $password): self
+    {
+        $this->newPassword = $password;
+
+        return $this;
+    }
+
+    public function getConfirmNewPassword(): ?string
+    {
+        return $this->confirmNewPassword;
+    }
+
+    public function setConfirmNewPassword(string $password): self
+    {
+        $this->confirmNewPassword = $password;
+
+        return $this;
+    }
+
+    public function getOldPassword(): ?string
+    {
+        return $this->oldPassword;
+    }
+
+    public function setOldPassword(string $password): self
+    {
+        $this->oldPassword = $password;
 
         return $this;
     }
