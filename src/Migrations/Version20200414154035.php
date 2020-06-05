@@ -20,7 +20,7 @@ final class Version20200414154035 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        //$this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE faq ADD category VARCHAR(200) NOT NULL, ADD queston VARCHAR(255) NOT NULL, ADD answer LONGTEXT NOT NULL, ADD status VARCHAR(60) NOT NULL, ADD date_publish DATETIME NOT NULL');
         $this->addSql('ALTER TABLE partner ADD name VARCHAR(120) NOT NULL, ADD description LONGTEXT NOT NULL, ADD service VARCHAR(120) NOT NULL, ADD logo VARCHAR(255) NOT NULL');
@@ -35,7 +35,7 @@ final class Version20200414154035 extends AbstractMigration
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        //$this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE faq DROP category, DROP queston, DROP answer, DROP status, DROP date_publish');
         $this->addSql('ALTER TABLE partner DROP name, DROP description, DROP service, DROP logo');
