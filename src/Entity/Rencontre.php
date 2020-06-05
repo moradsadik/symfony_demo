@@ -46,7 +46,7 @@ class Rencontre
     }
 
 
-    public function getDate(): ?\DateTmeInterface
+    public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
     }
