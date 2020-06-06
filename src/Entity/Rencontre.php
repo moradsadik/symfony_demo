@@ -26,7 +26,7 @@ class Rencontre
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="rencontres")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="utilisateur_id", referencedColumnName="id")
      */
     private $user;
 
