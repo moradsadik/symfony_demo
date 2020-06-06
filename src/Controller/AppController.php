@@ -53,7 +53,6 @@ class AppController
      */
     public function login(AuthenticationUtils  $auth)
     {
-        var_dump($auth);
         $html = $this->twig->render('app/login.html.twig', [
         	'error' => $auth->getLastAuthenticationError(),
         	'username' => $auth->getLastUsername()
