@@ -3,12 +3,28 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 
 /**
- * @ApiResource
+ * @ApiResource(
+ *   itemOperations = {
+ *         "get" = {
+ *             "normalization_context" = {
+ *                 "groups" = {"get-event", "get-event-other"}
+ *             }
+ *          }
+ *   },
+ *   collectionOperations = {
+ *         "get" = { 
+ *             "normalization_context" = {
+ *                 "groups" = {"get-event","get-event-other"}
+ *             }
+ *          }
+ *     } 
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
  */
 class Event
@@ -17,34 +33,40 @@ class Event
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"get-event"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=150)
      * @assert\NotBlank
+     * @Groups({"get-event","get-categorie-other"})
      */
     private $titre;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @assert\NotBlank
+     * @Groups({"get-event","get-categorie-other"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"get-event","get-categorie-other"})
      */
     private $dateDebut;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"get-event","get-categorie-other"})
      */
     private $dateFin;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @assert\NotBlank
+     * @Groups({"get-event","get-categorie-other"})
      */
     private $location;
 
@@ -52,6 +74,7 @@ class Event
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
      * @assert\NotBlank
+     * @Groups({"get-event-other"})
      */
     private $category;
 
@@ -59,6 +82,7 @@ class Event
      * @ORM\ManyToOne(targetEntity="App\Entity\Artist", inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
      * @assert\NotBlank
+     * @Groups({"get-categorie-other"})
      */
     private $artist;
 

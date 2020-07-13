@@ -5,8 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Artist;
 use App\Entity\User;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiResource;
+
 
 /**
+ * @ApiResource
  * @ORM\Entity(repositoryClass="App\Repository\RencontreRepository")
  */
 class Rencontre

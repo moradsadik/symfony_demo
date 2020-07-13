@@ -3,8 +3,15 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiResource;
+
 
 /**
+ * @ApiResource(
+ *     collectionOperations={"get" = {"path" = "faqs"}},
+ *     itemOperations={"get" = {"path" = "faqs/{id}"}}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\FAQRepository")
  */
 class FAQ
@@ -33,13 +40,11 @@ class FAQ
 
     /**
      * @ORM\Column(type="string", length=60)
-     * @var [type]
      */
     private $status;
 
     /**
      * @ORM\Column(type="datetime")
-     * @var [type]
      */
     private $datePublish;
 
@@ -87,18 +92,6 @@ class FAQ
         return $this;
     }
 
-    public function getStatus(): ?string
-    {
-        return $this->status;
-    }
-
-    public function setStatus(string $status): self
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
     public function getDatePublish(): ?\DateTimeInterface
     {
         return $this->datePublish;
@@ -107,6 +100,19 @@ class FAQ
     public function setDatePublish(\DateTimeInterface $datePublish): self
     {
         $this->datePublish = $datePublish;
+
+        return $this;
+    }
+    
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
