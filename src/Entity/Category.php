@@ -6,10 +6,26 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 /**
- * @ApiResource
+ * @ApiResource(
+ *   itemOperations = {
+ *         "get" = {
+ *             "normalization_context" = {
+ *                 "groups" = {"get-categorie","get-categorie-other"}
+ *             }
+ *          }
+ *   },
+ *   collectionOperations = {
+ *         "get" = { 
+ *             "normalization_context" = {
+ *                 "groups" = {"get-categorie","get-categorie-other"}
+ *             }
+ *          }
+ *     } 
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
  */
 class Category
@@ -18,21 +34,25 @@ class Category
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"get-categorie"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=90)
+     * @Groups({"get-categorie", "get-event-other"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=90)
+     * @Groups({"get-categorie"})
      */
     private $slug;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="category")
+     * @Groups({"get-categorie"})
      */
     private $events;
 

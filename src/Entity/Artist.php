@@ -8,10 +8,26 @@ use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 /**
- * @ApiResource
+ * @ApiResource(
+ *   itemOperations = {
+ *         "get" = {
+ *             "normalization_context" = {
+ *                 "groups" = {"get-artist"}
+ *             }
+ *          }
+ *   },
+ *   collectionOperations = {
+ *         "get" = { 
+ *             "normalization_context" = {
+ *                 "groups" = {"get-artist"}
+ *             }
+ *          }
+ *     } 
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\ArtistRepository")
  * @Vich\Uploadable
  */
@@ -21,16 +37,19 @@ class Artist
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"get-artist"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Groups({"get-categorie-other", "get-artist"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Groups({"get-categorie-other", "get-artist"})
      */
     private $prenom;
 
@@ -42,6 +61,7 @@ class Artist
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"get-categorie-other", "get-artist"})
      */
     private $avatar;
 
