@@ -82,7 +82,7 @@ class Event
      * @ORM\ManyToOne(targetEntity="App\Entity\Artist", inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
      * @assert\NotBlank
-     * @Groups({"get-categorie-other"})
+     * @Groups({"get-categorie-other", "get-event-other"})
      */
     private $artist;
 

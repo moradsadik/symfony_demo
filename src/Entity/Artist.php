@@ -43,13 +43,13 @@ class Artist
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"get-categorie-other", "get-artist"})
+     * @Groups({"get-categorie-other", "get-artist","get-event-other"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"get-categorie-other", "get-artist"})
+     * @Groups({"get-categorie-other", "get-artist","get-event-other"})
      */
     private $prenom;
 
@@ -61,7 +61,7 @@ class Artist
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"get-categorie-other", "get-artist"})
+     * @Groups({"get-categorie-other", "get-artist", "get-event-other"})
      */
     private $avatar;
 
