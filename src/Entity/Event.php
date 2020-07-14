@@ -33,7 +33,7 @@ class Event
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"get-event"})
+     * @Groups({"get-event","get-categorie-other"})
      */
     private $id;
 
