@@ -10,7 +10,10 @@ use ApiPlatform\Core\Annotation\ApiResource;
 
 
 /**
- * @ApiResource
+ * @ApiResource(
+ *     collectionOperations={"get"},
+ *     itemOperations={"get"}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\RencontreRepository")
  */
 class Rencontre
