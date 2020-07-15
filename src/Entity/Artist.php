@@ -67,6 +67,7 @@ class Artist
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="artist")
+     * @Groups({"get-artist-other"})
      */
     private $events;
 
