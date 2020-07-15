@@ -16,14 +16,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *   itemOperations = {
  *         "get" = {
  *             "normalization_context" = {
- *                 "groups" = {"get-artist"}
+ *                 "groups" = {"get-artist","get-artist-other"}
  *             }
  *          }
  *   },
  *   collectionOperations = {
  *         "get" = { 
  *             "normalization_context" = {
- *                 "groups" = {"get-artist"}
+ *                 "groups" = {"get-artist","get-artist-other"}
  *             }
  *          }
  *     } 

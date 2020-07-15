@@ -33,14 +33,14 @@ class Event
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"get-event","get-categorie-other"})
+     * @Groups({"get-event","get-categorie-other","get-artist-other"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=150)
      * @assert\NotBlank
-     * @Groups({"get-event","get-categorie-other"})
+     * @Groups({"get-event","get-categorie-other","get-artist-other"})
      */
     private $titre;
 
@@ -53,20 +53,20 @@ class Event
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"get-event","get-categorie-other"})
+     * @Groups({"get-event","get-categorie-other","get-artist-other"})
      */
     private $dateDebut;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"get-event","get-categorie-other"})
+     * @Groups({"get-event","get-categorie-other","get-artist-other"})
      */
     private $dateFin;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @assert\NotBlank
-     * @Groups({"get-event","get-categorie-other"})
+     * @Groups({"get-event","get-categorie-other", "get-artist-other"})
      */
     private $location;
 
