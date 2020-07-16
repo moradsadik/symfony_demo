@@ -11,8 +11,8 @@ use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ApiResource(
- *     collectionOperations={"get"},
- *     itemOperations={"get", "post"}
+ *     collectionOperations={"get", "post"},
+ *     itemOperations={"get"}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\RencontreRepository")
  */
