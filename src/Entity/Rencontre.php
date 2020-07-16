@@ -11,15 +11,21 @@ use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ApiResource(
- *     collectionOperations={"get" = {
+ *     collectionOperations={
+ *          "get" = {
  *             "normalization_context" = {
  *                 "groups" = {"get-rencontre", "get-rencontre-other"}
  *             }
- *          }, "post"},
- *     itemOperations={"get" = {
- *             "normalization_context" = {
- *                 "groups" = {"get-rencontre", "get-rencontre-other"}
- *             }}
+ *          }, 
+ *          "post"
+ *     },
+ *     itemOperations={
+ *           "get" = {
+ *              "normalization_context" = {
+ *                  "groups" = {"get-rencontre", "get-rencontre-other"}
+ *                }
+ *            }
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\RencontreRepository")
  */
