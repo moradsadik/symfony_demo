@@ -12,7 +12,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 /**
  * @ApiResource(
  *     collectionOperations={"get"},
- *     itemOperations={"get"}
+ *     itemOperations={"get", "post"}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\RencontreRepository")
  */
