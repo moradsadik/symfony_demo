@@ -69,20 +69,20 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"get"})
+     * @Groups({"get", "get-rencontre-other"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"get","put","post"})
+     * @Groups({"get","put","post", "get-rencontre-other"})
      * @Assert\NotBlank(groups = {"post"})
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"get","post","put"})
+     * @Groups({"get","post","put", "get-rencontre-other"})
      * @Assert\NotBlank(groups = {"post"})
      * @Assert\Email(groups = {"post"})
      */

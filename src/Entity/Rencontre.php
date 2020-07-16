@@ -11,8 +11,15 @@ use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ApiResource(
- *     collectionOperations={"get", "post"},
- *     itemOperations={"get"}
+ *     collectionOperations={"get" = {
+ *             "normalization_context" = {
+ *                 "groups" = {"get-rencontre", "get-rencontre-other"}
+ *             }
+ *          }, "post"},
+ *     itemOperations={"get" = {
+ *             "normalization_context" = {
+ *                 "groups" = {"get-rencontre", "get-rencontre-other"}
+ *             }}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\RencontreRepository")
  */
@@ -22,28 +29,33 @@ class Rencontre
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *  @Groups({"get-rencontre"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Artist", inversedBy="rencontres")
      * @ORM\JoinColumn(name="artist_id", referencedColumnName="id")
+     * @Groups({"get-rencontre-other"})
      */
     private $artist;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="rencontres")
      * @ORM\JoinColumn(name="utilisateur_id", referencedColumnName="id")
+     * @Groups({"get-rencontre-other"})
      */
     private $user;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"get-rencontre"})
      */
     private $date;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"get-rencontre"})
      */
     private $latLng;
 
