@@ -10,10 +10,6 @@ use ApiPlatform\Core\Annotation\ApiSubresource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
-
-use App\Controller\UpdatePasswordAction;
-
 
 /**
  * @ApiResource(
@@ -29,15 +25,6 @@ use App\Controller\UpdatePasswordAction;
  *             "denormalization_context" = {
  *                 "groups" = {"put"}
  *             }
- *         },
- *         "put-password" = {
- *            "access_control" = "is_granted('IS_AUTHENTICATED_FULLY') and object == user",
- *            "method" = "PUT",
- *            "path" = "users/{id}/update-password",
- *            "controller" = UpdatePasswordAction::class,
- *            "denormalization_context" = {
- *                 "groups" = {"put-password"}
- *            }
  *         }
  *     },
  *     collectionOperations = {
@@ -103,40 +90,16 @@ class User implements UserInterface
      */
     private $confirmPassword;
 
-
-
-
-    /**
-     * @Assert\NotBlank
-     * @Groups({"put-password"})
-     */
-    private $newPassword;
-
-
-    /**
-     * @Assert\NotBlank
-     * @Assert\EqualTo(propertyPath="newPassword", message="votre password de confirmation n'est pas valid")
-     * @Groups({"put-password"})
-     */
-    private $confirmNewPassword;
-
-    /**     
-     * @SecurityAssert\UserPassword
-     * @Assert\NotBlank
-     * @Groups({"put-password"})
-     */
-    private $oldPassword;
-
    
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="author")
      * @Groups({"get"})
-     * @ApiSubresource
      */
     private $posts;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Rencontre", mappedBy="user")
+     * @ApiSubresource
      */
     private $rencontres;
 
@@ -203,43 +166,6 @@ class User implements UserInterface
     public function setConfirmPassword(string $password): self
     {
         $this->confirmPassword = $password;
-
-        return $this;
-    }
-
-
-    public function getNewPassword(): ?string
-    {
-        return $this->newPassword;
-    }
-
-    public function setNewPassword(string $password): self
-    {
-        $this->newPassword = $password;
-
-        return $this;
-    }
-
-    public function getConfirmNewPassword(): ?string
-    {
-        return $this->confirmNewPassword;
-    }
-
-    public function setConfirmNewPassword(string $password): self
-    {
-        $this->confirmNewPassword = $password;
-
-        return $this;
-    }
-
-    public function getOldPassword(): ?string
-    {
-        return $this->oldPassword;
-    }
-
-    public function setOldPassword(string $password): self
-    {
-        $this->oldPassword = $password;
 
         return $this;
     }

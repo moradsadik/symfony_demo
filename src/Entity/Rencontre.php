@@ -7,17 +7,28 @@ use App\Entity\Artist;
 use App\Entity\User;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
  * @ApiResource(
+ *      subresourceOperations={
+ *          "api_users_rencontres_get_subresource"={
+ *              "method"="GET",
+ *              "normalization_context"={"groups"={"get-rencontre", "get-rencontre-other"}}
+ *          }
+ *      },
  *     collectionOperations={
  *          "get" = {
  *             "normalization_context" = {
  *                 "groups" = {"get-rencontre", "get-rencontre-other"}
  *             }
  *          }, 
- *          "post"
+ *          "post"= {
+ *             "denormalization_context" = {
+ *                 "groups" = {"post-rencontre"}
+ *             }
+ *         }
  *     },
  *     itemOperations={
  *           "get" = {
@@ -42,7 +53,8 @@ class Rencontre
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Artist", inversedBy="rencontres")
      * @ORM\JoinColumn(name="artist_id", referencedColumnName="id")
-     * @Groups({"get-rencontre-other"})
+     * @Groups({"get-rencontre-other","post-rencontre"})
+     * @Assert\NotBlank(groups = {"post-rencontre"})
      */
     private $artist;
 
