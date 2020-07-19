@@ -27,3 +27,9 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    # App\Security\JwtCreatedSubscriber:
+    #     tags:
+    #         - {name: kernel.event_listener,event: lexik_jwt_authentication.on_jwt_created,method: updateJwtData }
+    App\Security\JwtCreatedSubscriber:
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: updateJwtData }
