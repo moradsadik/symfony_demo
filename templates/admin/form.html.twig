@@ -30,6 +30,11 @@
 {% endmacro %}
 
 
+
+{% block _rencontre_custom_latLng_widget %}
+	{{_self.createMap('rencontre_latLng', form)}}
+{% endblock %} 
+
 {% block _event_custom_location_widget %}
 	{{_self.createMap('event_location', form)}}
 {% endblock %} 

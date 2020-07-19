@@ -139,4 +139,11 @@ easy_admin:
               
        Rencontre:
           class: App\Entity\Rencontre
-          
+          form:
+              fields: 
+                  - { type: 'group', columns: 4, label: 'info' }
+                  - date
+                  - artist
+                  - user
+                  - { type: 'group', columns: 8, label: 'Map' }
+                  - {property: 'latLng', type_options: { block_name: 'custom_latLng' }}
